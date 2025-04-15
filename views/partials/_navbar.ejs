@@ -1,0 +1,15 @@
+<!-- AAU, I want an easy and consistent way to navigate through the site, whether I am signed in or not. I need to quickly access options to sign up, sign in, view my recipes, or sign out, depending on my current status. -->
+
+<div class="navbar">
+    <% if (user) { %>
+        <p>
+            <a href="/auth/sign-out">Sign out</a>
+        </p>
+        <% } else { %>
+            <p>
+                <a href="/auth/sign-up">Sign up</a> or
+                <a href="/auth/sign-in">Sign in</a>
+            </p>
+            <% } %>
+
+</div>

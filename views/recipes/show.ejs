@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>
+        <%=recipes.name %>
+
+    </title>
+</head>
+
+<body>
+    <h1>
+        <%=recipes.name%>
+    </h1>
+    <a href="/">Back Home
+    </a>
+
+
+    <% if (recipes.instructions) { %>
+        <p>Instructions: <%=recipes.instructions%>
+        </p>
+        <% } else { %>
+            <p>Instructions have not been included in this recipe.</p>
+            <%}%>
+                <% if (recipes.ingredients) { %>
+                    <p>Ingredients: <%=recipes.ingredients%>
+                    </p>
+                    <% } else { %>
+                        <p>Ingredients have not been added to this recipe.</p>
+                        <% } %>
+
+                            <form class="delete-form" action="/recipes/<%=recipes._id%>?_method=DELETE" method="POST">
+                                <button class="delete-button" type="submit">Delete <%= recipes.name %></button>
+                            </form>
+                            <form class="edit-form" action="/recipes/<%= recipes._id %>/edit">
+                                <button class="edit-text">Edit <%= recipes.name %>
+
+
+                            </form>
+</body>
