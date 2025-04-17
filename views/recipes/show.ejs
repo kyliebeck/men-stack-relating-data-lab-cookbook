@@ -6,38 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>
-        <%=recipes.name %>
+        <%=recipe.name %>
 
     </title>
 </head>
 
 <body>
     <h1>
-        <%=recipes.name%>
+        <%=recipe.name%>
     </h1>
     <a href="/">Back Home
     </a>
 
 
-    <% if (recipes.instructions) { %>
-        <p>Instructions: <%=recipes.instructions%>
+    <% if (recipe.instructions) { %>
+        <p>Instructions: <%=recipe.instructions%>
         </p>
         <% } else { %>
             <p>Instructions have not been included in this recipe.</p>
             <%}%>
-                <% if (recipes.ingredients) { %>
-                    <p>Ingredients: <%=recipes.ingredients%>
+                <% if (recipe.ingredients) { %>
+                    <p>Ingredients: <%=recipe.ingredients.map((ingredient)=> {
+                            return ingredient.name
+                            }).join(", ")%>
+
                     </p>
                     <% } else { %>
                         <p>Ingredients have not been added to this recipe.</p>
                         <% } %>
 
-                            <form class="delete-form" action="/recipes/<%=recipes._id%>?_method=DELETE" method="POST">
-                                <button class="delete-button" type="submit">Delete <%= recipes.name %></button>
+                            <form class=" delete-form" action="/recipes/<%=recipe._id%>?_method=DELETE" method="POST">
+                                <button class="delete-button" type="submit">Delete <%= recipe.name %></button>
                             </form>
-                            <form class="edit-form" action="/recipes/<%= recipes._id %>/edit">
-                                <button class="edit-text">Edit <%= recipes.name %>
-
-
+                            <form class="edit-form" action="/recipes/<%= recipe._id %>/edit">
+                                <button class="edit-text">Edit <%= recipe.name %>
                             </form>
 </body>

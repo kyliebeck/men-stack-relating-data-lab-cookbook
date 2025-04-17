@@ -34,4 +34,9 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.delete('/', async (req, res) => {
+    await Ingredient.findByIdAndDelete(req.params.ingredientId);
+    res.redirect('/ingredients');
+});
+
 module.exports = router;

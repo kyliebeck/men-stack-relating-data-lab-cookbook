@@ -24,8 +24,16 @@ router.get('/new', async (req, res) => {
 // AAU, I want to see the full details of each recipe I create.
 
 router.get('/:recipeId', async (req, res) => {
-    const foundRecipe = await Recipe.findById(req.params.recipeId);
-    res.render('recipes/show.ejs', { recipes: foundRecipe });
+
+    const foundRecipe = await Recipe.findById(req.params.recipeId).populate("ingredients");
+    console.log("foundRecipe", foundRecipe)
+
+    res.render('recipes/show.ejs',
+        {
+            recipe: foundRecipe,
+        });
+
+
 });
 
 
@@ -51,15 +59,50 @@ router.delete('/:recipeId', async (req, res) => {
 
 router.get('/:recipeId/edit', async (req, res) => {
     const foundRecipe = await Recipe.findById(req.params.recipeId);
+    const allIngredients = await Ingredient.find();
     res.render('recipes/edit.ejs', {
-        recipes: foundRecipe
+        recipe: foundRecipe,
+        ingredients: allIngredients
     });
 });
 
 router.put('/:recipeId', async (req, res) => {
 
-    const updateRecipe = await Recipe.findByIdAndUpdate(req.params.recipeId, req.body);
-    await updateRecipe.save();
+    const keysInReqBody = Object.keys(req.body)
+
+    console.log('keysInReqBody', keysInReqBody)
+
+    // filter through keysInReqBody to find all keys that include ingredient-
+    const recipeIngredients = keysInReqBody.filter((key) => key.includes("ingredient-"))
+
+    console.log('recipeIngredients', recipeIngredients)
+
+    // split keys (ingredients) at the hyphen to isolate the ingredient id
+
+    const ingredientIds = recipeIngredients.map((ingredient) => {
+        // some logic here to split the ingredient string to remove the first part
+        console.log("ingredient", ingredient)
+        const ingredientId = ingredient.split("-")[1];
+        console.log("ingredientid", ingredientId)
+        return ingredientId;
+
+    })
+    console.log("ingredientids", ingredientIds)
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.recipeId, {
+        name: req.body.name,
+        instructions: req.body.instructions,
+        ingredients: ingredientIds,
+    }, { new: true });
+    await updatedRecipe.save();
+
+    console.log(updatedRecipe)
+
+
+    // add the second part of that string to an array called recipeIngredients
+
+
+
     res.redirect(`/recipes/${req.params.recipeId}`);
 
 })

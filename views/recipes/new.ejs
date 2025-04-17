@@ -26,24 +26,28 @@
 
         <h3>Add Ingredients</h3>
         <%ingredients.forEach(ingredient=>{%>
-            <div class="ingredient-list">
-                <ul>
-                    <li>
-                        <input type="checkbox" name="">
-                        <label for="">
-                            <%=ingredient.name%>
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            <% }) %>
+
+            <form id="input-form">
+                <div class="ingredient-list">
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="">
+                            <label for="">
+                                <%=ingredient.name%>
+                            </label>
+                        </li>
+                    </ul>
+
+                    <%});%>
+                </div>
+            </form>
 
 
 
 
-                <button type="submit">Submit</button>
+            <button type="submit">Submit</button>
 
 
-                <a href="/">Back Home
-                </a>
+            <a href="/">Back Home
+            </a>
 </body>
