@@ -39,6 +39,24 @@ h2 {
 
 }
 
+.navigate {
+    text-decoration: none;
+    border-radius: 20px;
+    background-color: #F2AB27;
+    color: #260D04;
+    height: 30px;
+    padding: 15px;
+    font-size: 20px;
+    border: 1px solid #260D04;
+    margin: 5px;
+
+}
+
+.navigate:hover {
+    box-shadow: 5px 6px;
+    font-size: 21px;
+}
+
 .ingredient-container {
     display: flex;
     flex-direction: row;
@@ -197,10 +215,10 @@ label {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    text-align: center;
-    justify-content: center;
+    text-align: left;
     font-size: 20px;
-    margin-top: 20px;
+    margin-top: 50px;
+    max-height: 700px;
 }
 
 .ingredi-submit {

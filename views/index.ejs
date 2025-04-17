@@ -10,16 +10,17 @@
 
 <body>
   <%- include('./partials/_navbar.ejs') %>
+    <div class="container">
+      <% if (user) { %>
+        <h1>Welcome to Cookbook, <%= user.username %>!</h1>
+        <a class="navigate" href="/recipes/new">Add New Recipe</a>
+        <a class="navigate" href="/recipes/">View My Recipes</a>
+        <a class="navigate" href="/ingredients/">View My Ingredients</a>
+        <% } else { %>
+          <h1>Welcome to Cookbook</h1>
 
-    <% if (user) { %>
-      <h1>Welcome to Cookbook, <%= user.username %>!</h1>
-      <a class="add-recipe" href="/recipes/new">Add New Recipe</a>
-      <a class="recipes-index" href="/recipes/">View My Recipes</a>
-      <a class="ingredients-index" href="/ingredients/">View My Ingredients</a>
-      <% } else { %>
-        <h1>Welcome to Cookbook</h1>
-
-        <% } %>
+          <% } %>
+    </div>
 </body>
 
 </html>
