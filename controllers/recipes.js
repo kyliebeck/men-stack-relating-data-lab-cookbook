@@ -26,7 +26,7 @@ router.get('/new', async (req, res) => {
 router.get('/:recipeId', async (req, res) => {
 
     const foundRecipe = await Recipe.findById(req.params.recipeId).populate("ingredients");
-    console.log("foundRecipe", foundRecipe)
+
 
     res.render('recipes/show.ejs',
         {
@@ -41,7 +41,23 @@ router.get('/:recipeId', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
 
-        const newRecipe = new Recipe(req.body);
+        const recipeData = {
+            name: req.body.name,
+            instructions: req.body.instructions
+        }
+        const keysInReqBody = Object.keys(req.body)
+        // filter through keysInReqBody to find all keys that include ingredient-
+        const recipeIngredients = keysInReqBody.filter((key) => key.includes("ingredient-"))
+        // split keys (ingredients) at the hyphen to isolate the ingredient id
+        const ingredientIds = recipeIngredients.map((ingredient) => {
+            // some logic here to split the ingredient string to remove the first part
+            const ingredientId = ingredient.split("-")[1];
+            return ingredientId;
+        })
+        recipeData.ingredients = ingredientIds
+
+
+        const newRecipe = new Recipe(recipeData);
         newRecipe.owner = req.session.user._id;
         await newRecipe.save();
         // Redirect to recipe index or show page
@@ -52,6 +68,7 @@ router.post('/', async (req, res) => {
         return res.status(401).send("Post failed. Please try again.");
     }
 });
+
 router.delete('/:recipeId', async (req, res) => {
     await Recipe.findByIdAndDelete(req.params.recipeId);
     res.redirect('/recipes');
@@ -70,24 +87,24 @@ router.put('/:recipeId', async (req, res) => {
 
     const keysInReqBody = Object.keys(req.body)
 
-    console.log('keysInReqBody', keysInReqBody)
+
 
     // filter through keysInReqBody to find all keys that include ingredient-
     const recipeIngredients = keysInReqBody.filter((key) => key.includes("ingredient-"))
 
-    console.log('recipeIngredients', recipeIngredients)
+
 
     // split keys (ingredients) at the hyphen to isolate the ingredient id
 
     const ingredientIds = recipeIngredients.map((ingredient) => {
         // some logic here to split the ingredient string to remove the first part
-        console.log("ingredient", ingredient)
+
         const ingredientId = ingredient.split("-")[1];
-        console.log("ingredientid", ingredientId)
+
         return ingredientId;
 
     })
-    console.log("ingredientids", ingredientIds)
+
 
     const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.recipeId, {
         name: req.body.name,
@@ -96,7 +113,7 @@ router.put('/:recipeId', async (req, res) => {
     }, { new: true });
     await updatedRecipe.save();
 
-    console.log(updatedRecipe)
+
 
 
     // add the second part of that string to an array called recipeIngredients

@@ -12,33 +12,43 @@
 </head>
 
 <body>
+    <div class="nav-bar">
+        <%- include('../partials/_navbar.ejs') %>
+            <a class="nav-link" href="/">Back Home
+            </a>
+            <a class="nav-link" href="/recipes">View Recipes</a>
+    </div>
     <h1>
-        <%=recipe.name%>
+        Recipe for <%=recipe.name%>
     </h1>
-    <a href="/">Back Home
-    </a>
 
 
-    <% if (recipe.instructions) { %>
-        <p>Instructions: <%=recipe.instructions%>
-        </p>
-        <% } else { %>
-            <p>Instructions have not been included in this recipe.</p>
-            <%}%>
-                <% if (recipe.ingredients) { %>
-                    <p>Ingredients: <%=recipe.ingredients.map((ingredient)=> {
-                            return ingredient.name
-                            }).join(", ")%>
+    <div class="recipe-form">
+        <% if (recipe.instructions) { %>
+            <p class="recipe-attribute">Instructions: <%=recipe.instructions%>
+            </p>
+            <% } else { %>
+                <p class="recipe-attribute">Instructions have not been included in this recipe.</p>
+                <%}%>
+                    <% if (recipe.ingredients) { %>
+                        <p class="recipe-attribute">Ingredients: <%=recipe.ingredients.map((ingredient)=> {
+                                return ingredient.name
+                                }).join(", ")%>
 
-                    </p>
-                    <% } else { %>
-                        <p>Ingredients have not been added to this recipe.</p>
-                        <% } %>
+                        </p>
+                        <% } else { %>
+                            <p>Ingredients have not been added to this recipe.</p>
+                            <% } %>
 
-                            <form class=" delete-form" action="/recipes/<%=recipe._id%>?_method=DELETE" method="POST">
-                                <button class="delete-button" type="submit">Delete <%= recipe.name %></button>
-                            </form>
-                            <form class="edit-form" action="/recipes/<%= recipe._id %>/edit">
-                                <button class="edit-text">Edit <%= recipe.name %>
-                            </form>
+                                <div class="action-container">
+                                    <form class="delete-form" action="/recipes/<%=recipe._id%>?_method=DELETE"
+                                        method="POST">
+                                        <button class="recipe-action" type="submit">Delete </button>
+                                    </form>
+                                    <form class="edit-form" action="/recipes/<%= recipe._id %>/edit">
+                                        <button class="recipe-action">Edit
+                                    </form>
+                                </div>
+    </div>
+
 </body>

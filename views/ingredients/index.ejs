@@ -9,37 +9,44 @@
 </head>
 
 <body>
-    <%- include('../partials/_navbar.ejs') %>
+    <div class="nav-bar">
+        <%- include('../partials/_navbar.ejs') %>
+            <a class="nav-link" href="/">Back Home
+            </a>
+    </div>
+    <div class="ingredient-container">
         <h1>My Ingredients</h1>
 
 
         <!-- if there are no ingredients, render "there are no ingredients"
             else, iterate through the ingredients with for each loop-->
-        <div class="ingredient-container">
-            <form action="/ingredients/" method="POST">
-                <label for="name">Ingredient:</label>
-                <input type="text" name="name" id="name" />
-                <button type="submit">Add</button>
-            </form>
-        </div>
 
+        <form action="/ingredients/" method="POST">
+
+            <label for="name">Ingredient:</label>
+            <input type="text" name="name" id="name" class="text-box" />
+
+            <button type="submit" class="ingredi-submit">Add</button>
+        </form>
+    </div>
+    <div class="ingredient-index">
         <%if (!ingredients.length> 0){ %>
             <%="Add some ingredients to your collection!"%>
 
                 <%} else { %>
-                    <ul>
 
-                        <% ingredients.forEach(ingredient=> { %>
-                            <li>
-                                <%=ingredient.name %>
 
-                                    <% }) %>
-                            </li>
-                            <% } %>
+                    <% ingredients.forEach(ingredient=> { %>
+                        <li>
+                            <%=ingredient.name %>
 
-                    </ul>
-                    <a href="/">Back Home
-                    </a>
+                                <% }) %>
+                        </li>
+                        <% } %>
+
+
+    </div>
+
 </body>
 
 </html>

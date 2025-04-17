@@ -12,9 +12,12 @@
     border-radius: 15px;
     text-decoration: none;
     padding: 5px;
-
+    color: #260D04
 }
 
 .authlink:hover {
-    background-color: yellow;
+    background-color: #F2AB27;
+    color: black;
+    box-shadow: 2px 3px;
+
 }
